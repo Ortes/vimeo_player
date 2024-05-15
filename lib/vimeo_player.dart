@@ -33,8 +33,7 @@ class _VimeoPlayerState extends State<VimeoPlayer> {
   Future<void> init() async {
     final response = await Dio().get('${widget.proxyUrl}${widget.videoId}');
     final defaultCdn = response.data['request']['files']['hls']['default_cdn'];
-    final url = response.data['request']['files']['hls']['cdns'][defaultCdn]['url'];
-    print(url);
+    final url = response.data['request']['files']['hls']['cdns'][defaultCdn]['avc_url'];
     final videoPlayerController = VideoPlayerController.networkUrl(Uri.parse(url));
 
     await videoPlayerController.initialize();
