@@ -18,8 +18,6 @@ class VimeoPlayer extends StatefulWidget {
 class _VimeoPlayerState extends State<VimeoPlayer> {
   ChewieController? _chewieController;
 
-  // VideoPlayerController? _videoPlayerController;
-
   @override
   void initState() {
     super.initState();
@@ -49,7 +47,6 @@ class _VimeoPlayerState extends State<VimeoPlayer> {
   @override
   Widget build(BuildContext context) {
     if (_chewieController == null) {
-      init();
       return const IntrinsicHeight(child: Center(child: CircularProgressIndicator()));
     } else {
       return AspectRatio(
