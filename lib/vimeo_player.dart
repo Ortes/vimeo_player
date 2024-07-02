@@ -16,22 +16,23 @@ class VimeoPlayer extends StatefulWidget {
 }
 
 class _VimeoPlayerState extends State<VimeoPlayer> {
+  bool play = false;
+  String? thumbnailUrl;
   ChewieController? _chewieController;
 
   @override
   void initState() {
     super.initState();
-    try {
-      init();
-    } catch (e) {
-      print(e);
-    }
+    init();
   }
 
   Future<void> init() async {
     final response = await Dio().get('${widget.proxyUrl}${widget.videoId}');
-    final defaultCdn = response.data['request']['files']['hls']['default_cdn'];
-    final url = response.data['request']['files']['hls']['cdns'][defaultCdn]['avc_url'];
+    setState(() {
+      thumbnailUrl = response.data['pictures']['sizes'][4]['link_with_play_button'];
+    });
+
+    final url = response.data['play']['hls']['link'];
     final videoPlayerController = VideoPlayerController.networkUrl(Uri.parse(url));
 
     await videoPlayerController.initialize();
@@ -46,8 +47,18 @@ class _VimeoPlayerState extends State<VimeoPlayer> {
 
   @override
   Widget build(BuildContext context) {
-    if (_chewieController == null) {
-      return const IntrinsicHeight(child: Center(child: CircularProgressIndicator()));
+    if (thumbnailUrl == null) {
+      return const Center(child: CircularProgressIndicator());
+    } else if (!play) {
+      return InkWell(
+        onTap: () {
+          setState(() {
+            play = true;
+            _chewieController!.play();
+          });
+        },
+        child: Image.network(thumbnailUrl!),
+      );
     } else {
       return AspectRatio(
         aspectRatio: _chewieController!.videoPlayerController.value.aspectRatio,
