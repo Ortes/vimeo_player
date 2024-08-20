@@ -17,7 +17,7 @@ dependencies:
 #    path: ../video_player_web_hls
     git:
       url: https://github.com/Ortes/video_player_web_hls.git
-      ref: 969f6638aa27b2420288c4fc2f80c82afefefd28
+      ref: 1715f3fe69cd500268539e4bded65b5216451878
 
   dio: ^5.4.3+1
 
