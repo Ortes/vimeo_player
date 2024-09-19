@@ -37,6 +37,7 @@ class _VimeoPlayerState extends State<VimeoPlayer> {
 
     await videoPlayerController.initialize();
 
+    if (!mounted) return;
     setState(() {
       _chewieController = ChewieController(
         videoPlayerController: videoPlayerController,
