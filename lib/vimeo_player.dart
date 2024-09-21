@@ -28,6 +28,7 @@ class _VimeoPlayerState extends State<VimeoPlayer> {
 
   Future<void> init() async {
     final response = await Dio().get('${widget.proxyUrl}${widget.videoId}');
+    if (!mounted) return;
     setState(() {
       thumbnailUrl = response.data['pictures']['sizes'][3]['link_with_play_button'];
     });
